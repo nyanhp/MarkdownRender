@@ -66,14 +66,14 @@ namespace Microsoft.PowerShell.MarkdownRender
 
             if (conversionType.HasFlag(MarkdownConversionType.HTML))
             {
-                pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+                pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseYamlFrontMatter()..Build();
                 var renderer = new Markdig.Renderers.HtmlRenderer(writer);
                 renderInfo.Html = Markdig.Markdown.Convert(markdownString, renderer, pipeline).ToString();
             }
 
             if (conversionType.HasFlag(MarkdownConversionType.VT100))
             {
-                pipeline = new MarkdownPipelineBuilder().Build();
+                pipeline = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
 
                 // Use the VT100 renderer.
                 var renderer = new VT100Renderer(writer, optionInfo);
